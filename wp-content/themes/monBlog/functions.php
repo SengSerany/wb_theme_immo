@@ -1,6 +1,7 @@
 <?php
     function my_theme_support () {
         add_theme_support("title-tag");
+        add_theme_support('post-thumbnails');
     }
 
     function my_theme_register_asset () {
