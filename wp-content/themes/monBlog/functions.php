@@ -36,6 +36,27 @@
         return $attrs;
     }
 
+    function my_theme_pagination (){
+        $pages = paginate_links(['type' => 'array']);
+        if ($pages === null) {
+            return;
+        }
+        echo '<nav aria-label="Pagination">';
+        echo '<ul class="pagination my-4">';
+        foreach($pages as $page) {
+            $active = strpos($page, 'current') !== false;
+            $class = 'page-item';
+            if ($active) {
+                $class .= ' active';
+            }
+            echo '<li class="' . $class . '">';
+            echo str_replace('page-numbers', 'page-link', $page);
+            echo'</li>';
+        }
+        echo '</ul>';
+        echo '</nav>';
+    }
+
     add_action("after_setup_theme", "my_theme_support");
     add_action('wp_enqueue_scripts', 'my_theme_register_asset');
     add_filter('document_title_separator', 'my_theme_title_separator');
