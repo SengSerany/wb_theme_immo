@@ -65,3 +65,7 @@
     add_filter('document_title_parts', 'my_theme_document_title_parts');
     add_filter('nav_menu_css_class', 'my_theme_menu_class');
     add_filter('nav_menu_link_attributes', 'my_theme_menu_link_class');
+
+    require_once('metaboxes/sponso.php');
+
+    SponsoMetaBox::register();
