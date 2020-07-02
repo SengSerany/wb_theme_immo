@@ -110,5 +110,7 @@
     add_filter('nav_menu_link_attributes', 'my_theme_menu_link_class');
 
     require_once('metaboxes/sponso.php');
+    require_once('options/agence.php');
 
     SponsoMetaBox::register();
+    AgenceMenuPage::register();
