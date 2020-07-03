@@ -114,3 +114,44 @@
 
     SponsoMetaBox::register();
     AgenceMenuPage::register();
+
+    add_filter('manage_bien_posts_columns', function ($columns) {
+        return [
+            'cb' => $columns['cb'],
+            'thumbnail' => 'Miniature',
+            'title' => $columns['title'],
+            'date' => $columns['date']
+        ];
+    });
+
+    add_filter('manage_bien_posts_custom_column', function ($column, $postId) {
+        if($column === 'thumbnail') {
+            the_post_thumbnail('thumbnail', $postId);
+        }
+    }, 10, 2);
+
+    add_action('admin_enqueue_scripts', function () {
+        wp_enqueue_style('admin_my_theme', get_template_directory_uri() . "/assets/admin.css");
+    });
+
+    add_filter('manage_post_posts_columns', function ($columns) {
+        $newColumns = [];
+        foreach($columns as $key => $value) {
+            if ($key === 'comments'){
+                $newColumns['sponso'] = 'Sponsorisé ?';
+            }
+            $newColumns[$key] = $value;
+        }
+        return $newColumns;
+    });
+
+    add_filter('manage_post_posts_custom_column', function ($column, $postId) {
+        if ($column === 'sponso'){
+            if(get_post_meta($postId, SponsoMetaBox::META_KEY, true) === '1') {
+                $class = 'yes';
+            } else {
+                $class = 'no';
+            };
+            echo '<div class="bullet bullet-' . $class . '"></div>';
+        }
+    }, 10, 2 );
