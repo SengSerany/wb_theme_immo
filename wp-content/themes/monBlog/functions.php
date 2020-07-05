@@ -155,3 +155,26 @@
             echo '<div class="bullet bullet-' . $class . '"></div>';
         }
     }, 10, 2 );
+
+    function my_theme_pre_get_posts (WP_Query $query) {
+        if (is_admin() || !is_search() || !$query->is_main_query()) {
+            return;
+        }
+        
+        if(get_query_var('sponso') === '1') {
+            $meta_query = $query->get('meta_query', []);
+            $meta_query[] = [
+                'key' => SponsoMetaBox::META_KEY,
+                'compare' => 'EXISTS'
+            ];
+            $query->set('meta_query', $meta_query);
+        }
+    }
+
+    function my_theme_query_vars ($params) {
+        $params[] = 'sponso';
+        return $params;
+    }
+
+    add_action('pre_get_posts', 'my_theme_pre_get_posts');
+    add_filter('query_vars', 'my_theme_query_vars');
