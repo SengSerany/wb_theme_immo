@@ -178,3 +178,16 @@
 
     add_action('pre_get_posts', 'my_theme_pre_get_posts');
     add_filter('query_vars', 'my_theme_query_vars');
+
+    function my_theme_register_widget () {
+        register_sidebar([
+            'id' => 'homepage',
+            'name' => 'Sidebar Acceuil',
+            'before_widget' => '<div class="p4 %2$s" id="%1$s">',
+            'after_widget' => '</div>',
+            'before_title' => '<h4 class="font-italic">',
+            'after-title' => '</h4>'
+        ]);
+    }
+
+    add_action('widgets_init', 'my_theme_register_widget');
