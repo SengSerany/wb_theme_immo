@@ -160,7 +160,7 @@
         if (is_admin() || !is_search() || !$query->is_main_query()) {
             return;
         }
-        
+
         if(get_query_var('sponso') === '1') {
             $meta_query = $query->get('meta_query', []);
             $meta_query[] = [
@@ -179,7 +179,10 @@
     add_action('pre_get_posts', 'my_theme_pre_get_posts');
     add_filter('query_vars', 'my_theme_query_vars');
 
+    require_once 'widgets/YoutubeWidget.php';
+
     function my_theme_register_widget () {
+        register_widget(YoutubeWidget::class);
         register_sidebar([
             'id' => 'homepage',
             'name' => 'Sidebar Acceuil',
