@@ -12,13 +12,19 @@
         <p>
             <img src="<?php the_post_thumbnail_url() ?>" alt="" style="width: 100%; height: auto;">
         </p>
-        <?php the_content() ?>
+        <?php
+            the_content();
+
+            if (comments_open() || get_comments_number()) {
+                comments_template();
+            }
+        ?>
 
         <h2>Articles relatifs</h2>
 
         <div class="row">
-            <?php 
-            
+            <?php
+
             $sports = array_map(function ($term) {
                 return $term->term_id;
             }, get_the_terms(get_post(), 'sport'));

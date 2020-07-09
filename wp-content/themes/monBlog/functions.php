@@ -1,8 +1,12 @@
 <?php
+
+    require_once('walkers/CommentWalker.php');
+
     function my_theme_support () {
         add_theme_support("title-tag");
         add_theme_support('post-thumbnails');
         add_theme_support('menus');
+        add_theme_support('html5');
         register_nav_menu('header', 'En tête du menu');
         register_nav_menu('footer', 'Pied de page');
 
@@ -194,3 +198,10 @@
     }
 
     add_action('widgets_init', 'my_theme_register_widget');
+
+    /* add_filter('comment_form_default_fields', function ($fields) {
+        $fields['email'] = <<<HTML
+        <div class="form-group"><label for="email">Votre email</label><input class="form-control" name="email" id="email" required></div>
+HTML;
+    return $fields;
+    }); */
